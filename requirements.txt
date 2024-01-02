@@ -3,3 +3,5 @@ uvicorn
 sqlalchemy
 databases
 python-dotenv
+asyncpg
+psycopg2
