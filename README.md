@@ -24,6 +24,17 @@ CREATE TABLE products (
     is_available BOOLEAN DEFAULT TRUE,
     store_id INTEGER REFERENCES stores(store_id)
 );
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE,
+    username VARCHAR(255) UNIQUE,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    hashed_password VARCHAR(255),
+    is_active BOOLEAN DEFAULT TRUE,
+    role VARCHAR(255)
+);
 ```
 
 ## Getting started
