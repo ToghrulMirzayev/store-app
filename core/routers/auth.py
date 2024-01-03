@@ -10,6 +10,7 @@ from env_config import SessionLocal
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from jose import jwt, JWTError
 from core.models import TokenResponse
+from env_config import ALGORITHM, SECRET_KEY
 
 router = APIRouter(
     prefix='/auth',
@@ -17,8 +18,6 @@ router = APIRouter(
     responses={401: {'user': 'Not authorized'}}
 )
 
-SECRET_KEY = 'qwert123'
-ALGORITHM = 'HS256'
 
 bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token')
