@@ -97,7 +97,7 @@ async def login_user_with_token(form_data: OAuth2PasswordRequestForm = Depends()
     token = create_access_token(user.username,
                                 user.id,
                                 expires_delta=token_expires)
-    return {'token': token}
+    return {"access_token": token, "token_type": "bearer"}
 
 
 def get_user_exception():
