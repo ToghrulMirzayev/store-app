@@ -40,3 +40,16 @@ class ProductCreate(BaseModel):
 class StoreCreate(BaseModel):
     location: str
     store_name: str
+
+
+class UserRegister(BaseModel):
+    username: str
+    email: str
+    first_name: str
+    last_name: str
+    password: str
+    role: str
+
+
+class TokenResponse(BaseModel):
+    token: str

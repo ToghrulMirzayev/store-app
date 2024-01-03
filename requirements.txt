@@ -5,3 +5,6 @@ databases
 python-dotenv
 asyncpg
 psycopg2
+passlib[bcrypt]
+python-multipart
+python-jose[cryptography]
