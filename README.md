@@ -37,6 +37,39 @@ CREATE TABLE users (
 );
 ```
 
+## Tables should look like below
+```
+stores table
+
+| Column         | Data Type |
+|----------------|-----------|
+| store_id       | SERIAL    |
+| store_name     | VARCHAR   |
+| location       | VARCHAR   |
+
+products table
+
+| Column         | Data Type |
+|----------------|-----------|
+| product_id     | SERIAL    |
+| product_name   | VARCHAR   |
+| is_available   | BOOLEAN   |
+| store_id       | INTEGER   |
+
+users table
+
+| Column         | Data Type |
+|----------------|-----------|
+| id             | SERIAL    |
+| email          | VARCHAR   |
+| username       | VARCHAR   |
+| first_name     | VARCHAR   |
+| last_name      | VARCHAR   |
+| hashed_password| VARCHAR   |
+| is_active      | BOOLEAN   |
+| role           | VARCHAR   |
+```
+
 ## Getting started
 * Create virtual env:
   * `python -m venv venv`
@@ -47,7 +80,18 @@ CREATE TABLE users (
     * `source venv/bin/activate`
 * Install dependencies: 
   * `pip install -r requirements.txt`
+* To make this code work in your local machine, create `.env` in root directory and add environment variables there as shown in below example:
+  * ```
+    DATABASE_URL="your postgresql connection string"
+    SECRET_KEY="your secret key"
+    ```
 * Launch the server:
-  * `uvicorn main:app --reload`
-
-After this, the API will be accessible at http://127.0.0.1:8000/docs, where you can use the interactive Swagger documentation to test requests.
+  * Basic Launch
+    * `uvicorn app:app`
+    * Swagger will be accessible at http://127.0.0.1:8000/docs
+  * Auto-Reload Enabled 
+    * `uvicorn app:app --reload`
+    * Swagger will be accessible at http://127.0.0.1:8000/docs
+  * Specify Port with Auto-Reload
+    * `uvicorn app:app --port 8086 --reload`
+    * Swagger will be accessible at http://127.0.0.1:8086/docs
