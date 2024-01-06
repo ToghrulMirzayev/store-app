@@ -81,6 +81,9 @@ async def update_product_availability(product_id: int,
                                       db: Session = Depends(get_db)):
     if user is None:
         raise get_user_exception()
+    if user['role'] != 'admin':
+        raise HTTPException(status_code=403, detail="Permission denied. Only admins can update product availability "
+                                                    "manually")
     db_product = db.query(ProductDB).filter(ProductDB.product_id == product_id).first()
     if db_product is None:
         raise HTTPException(status_code=404, detail="Product not found")
