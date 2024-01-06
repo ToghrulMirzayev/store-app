@@ -58,20 +58,31 @@ def create_access_token(username: str, user_id: int, expires_delta: Optional[tim
     return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
-async def get_current_user(token: str = Depends(oauth2_bearer)):
+async def get_user_role_from_database(db: Session, username: str):
+    user = db.query(User).filter(User.username == username).first()
+    if user:
+        return user.role
+    return None
+
+
+async def get_current_user(token: str = Depends(oauth2_bearer), db: Session = Depends(get_db)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get('sub')
         user_id: int = payload.get('id')
-        if username is None or user_id is None:
+        role = await get_user_role_from_database(db, username)
+
+        if username is None or user_id is None or role is None:
             raise get_user_exception()
-        return {'username': username, 'id': user_id}
+        return {'username': username, 'id': user_id, 'role': role}
     except JWTError:
         raise get_user_exception()
 
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register_user(user_register: UserRegister, db: Session = Depends(get_db)):
+    if user_register.role not in ['admin', 'user']:
+        raise HTTPException(status_code=400, detail="Invalid role. Allowed roles are 'admin' or 'user'")
     user_registration_model = User(
         email=user_register.email,
         username=user_register.username,
@@ -81,7 +92,6 @@ async def register_user(user_register: UserRegister, db: Session = Depends(get_d
         hashed_password=bcrypt_context.hash(user_register.password),
         is_active=True
     )
-
     db.add(user_registration_model)
     db.commit()
 
