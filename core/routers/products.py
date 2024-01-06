@@ -2,8 +2,8 @@ from typing import List
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from fastapi import status
-from core.models import ProductCreate, ProductResponse
-from core.db_models import Product as ProductDB
+from core.schemas import ProductCreate, ProductResponse
+from core.models import Product as ProductDB
 from env_config import SessionLocal
 from core.routers.auth import get_current_user, get_user_exception
 

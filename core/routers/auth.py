@@ -3,13 +3,13 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from fastapi import status
-from core.db_models import User
-from core.models import UserRegister
+from core.models import User
+from core.schemas import UserRegister
 from passlib.context import CryptContext
 from env_config import SessionLocal
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from jose import jwt, JWTError
-from core.models import TokenResponse
+from core.schemas import TokenResponse
 from env_config import ALGORITHM, SECRET_KEY
 
 router = APIRouter(
