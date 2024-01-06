@@ -1,56 +1,39 @@
-from typing import List
-from pydantic import BaseModel
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 
-class Product:
-    def __init__(self, product_name: str, is_available: bool, store_id: int, product_id: int = None):
-        self.product_id = product_id
-        self.product_name = product_name
-        self.is_available = is_available
-        self.store_id = store_id
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True)
+    username = Column(String, unique=True)
+    first_name = Column(String)
+    last_name = Column(String)
+    hashed_password = Column(String)
+    is_active = Column(Boolean, default=True)
+    role = Column(String)
 
 
-class Store:
-    def __init__(self, location: str, store_name: str, store_id: int = None):
-        self.store_id = store_id
-        self.store_name = store_name
-        self.location = location
-        self.products = []
+class Store(Base):
+    __tablename__ = "stores"
+
+    store_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    store_name = Column(String, index=True)
+    location = Column(String)
+
+    products = relationship("Product", back_populates="store")
 
 
-class ProductResponse(BaseModel):
-    product_id: int
-    product_name: str
-    is_available: bool
-    store_id: int
+class Product(Base):
+    __tablename__ = "products"
 
+    product_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    product_name = Column(String, index=True)
+    is_available = Column(Boolean, default=True)
+    store_id = Column(Integer, ForeignKey("stores.store_id"))
 
-class StoreResponse(BaseModel):
-    location: str
-    store_name: str
-    products: List[ProductResponse]
-
-
-class ProductCreate(BaseModel):
-    product_name: str
-    is_available: bool
-    store_id: int
-
-
-class StoreCreate(BaseModel):
-    location: str
-    store_name: str
-
-
-class UserRegister(BaseModel):
-    username: str
-    email: str
-    first_name: str
-    last_name: str
-    password: str
-    role: str
-
-
-class TokenResponse(BaseModel):
-    access_token: str
-    token_type: str
+    store = relationship("Store", back_populates="products")
