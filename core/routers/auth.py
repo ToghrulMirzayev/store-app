@@ -1,16 +1,13 @@
 from datetime import timedelta, datetime
 from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from fastapi import status
-from core.models import User
-from core.schemas import UserRegister
-from passlib.context import CryptContext
-from env_config import SessionLocal
+from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
+from passlib.context import CryptContext
 from jose import jwt, JWTError
-from core.schemas import TokenResponse
-from env_config import ALGORITHM, SECRET_KEY
+from sqlalchemy.orm import Session
+from core.models import User
+from core.schemas import UserRegister, TokenResponse
+from env_config import SessionLocal, ALGORITHM, SECRET_KEY
 
 router = APIRouter(
     prefix='/auth',

@@ -1,11 +1,10 @@
 from typing import List
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
-from fastapi import status
 from core.schemas import ProductCreate, ProductResponse
 from core.models import Product as ProductDB
-from env_config import SessionLocal
 from core.routers.auth import get_current_user, get_user_exception
+from env_config import SessionLocal
 
 router = APIRouter(
     prefix='/product',
