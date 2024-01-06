@@ -72,3 +72,17 @@ async def delete_product(product_id: int,
         raise HTTPException(status_code=404, detail="Product not found")
     db.delete(db_product)
     db.commit()
+
+
+@router.patch("/update-product-availability/{product_id}", response_model=None)
+async def update_product_availability(product_id: int,
+                                      is_available: bool,
+                                      user: dict = Depends(get_current_user),
+                                      db: Session = Depends(get_db)):
+    if user is None:
+        raise get_user_exception()
+    db_product = db.query(ProductDB).filter(ProductDB.product_id == product_id).first()
+    if db_product is None:
+        raise HTTPException(status_code=404, detail="Product not found")
+    db_product.is_available = is_available
+    db.commit()
