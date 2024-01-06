@@ -3,13 +3,17 @@
 This is a simple API application built with FastAPI, a modern Python web framework. The project provides a RESTful API for managing stores and their products.
 
 ## Key Features
-- Store Management: Addition, retrieval, updating, and deletion of store information.
-- Product Management: Addition, retrieval, updating, and deletion of product information within stores.
+- **User Registration:** New users can register by providing necessary information such as email, username, password etc.
+- **Authentication:** Registered users can authenticate themselves using a secure authentication mechanism.
+- **Role-Based Access Control:** The application implements role-based access control (RBAC), allowing users to have specific roles, such as 'admin' or 'user'. Different roles grant different levels of access and permissions.
+- **Store Management:** Enables users with appropriate roles to perform actions related to store management, including addition, retrieval, updating, and deletion of store information.
+- **Product Management:** Users with the necessary roles can manage product information within stores by performing actions such as addition, retrieval, updating, and deletion of products.
 ## Technologies Used
+- Python 3
 - FastAPI
 - SQLAlchemy
 - PostgreSQL
-
+- Pydantic
 ## Database setup
 ```
 CREATE TABLE stores (
