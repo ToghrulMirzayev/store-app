@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 
 
@@ -28,6 +28,7 @@ class ProductResponse(BaseModel):
 class StoreResponse(BaseModel):
     location: str
     store_name: str
+    address: str | None
     products: List[ProductResponse]
 
 
@@ -40,6 +41,7 @@ class ProductCreate(BaseModel):
 class StoreCreate(BaseModel):
     location: str
     store_name: str
+    address: Optional[str] = None
 
 
 class UserRegister(BaseModel):
