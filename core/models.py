@@ -24,6 +24,7 @@ class Store(Base):
     store_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     store_name = Column(String, index=True)
     location = Column(String)
+    address = Column(String, default=None)
 
     products = relationship("Product", back_populates="store")
 
