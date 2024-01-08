@@ -86,8 +86,12 @@ users table
   * `pip install -r requirements.txt`
 * To make this code work in your local machine, create `.env` in root directory and add environment variables there as shown in below example:
   * ```
-    DATABASE_URL="your postgresql connection string"
-    SECRET_KEY="your secret key"
+    SECRET_KEY=your secret key
+    DB_USER=database user
+    DB_PASS=database password
+    DB_HOST=database host
+    DB_PORT=database port
+    DB_NAME=database name
     ```
 * Launch the server:
   * Basic Launch
