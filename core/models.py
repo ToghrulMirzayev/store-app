@@ -28,6 +28,9 @@ class Store(Base):
 
     products = relationship("Product", back_populates="store")
 
+    def __str__(self):
+        return f"{self.store_name}"
+
 
 class Product(Base):
     __tablename__ = "products"
@@ -38,3 +41,6 @@ class Product(Base):
     store_id = Column(Integer, ForeignKey("stores.store_id"))
 
     store = relationship("Store", back_populates="products")
+
+    def __str__(self):
+        return f"{self.product_name}"
