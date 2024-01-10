@@ -77,10 +77,9 @@ products table
 * Launch the server:
   * Basic Launch
     * `uvicorn app:app`
-    * Swagger will be accessible at http://127.0.0.1:8000/docs
   * Auto-Reload Enabled 
     * `uvicorn app:app --reload`
-    * Swagger will be accessible at http://127.0.0.1:8000/docs
   * Specify Port with Auto-Reload
     * `uvicorn app:app --port 8086 --reload`
-    * Swagger will be accessible at http://127.0.0.1:8086/docs
+* Swagger will be accessible at `http://127.0.0.1:<port>/docs`
+* Admin panel will be accessible at `http://127.0.0.1:<port>/admin`
