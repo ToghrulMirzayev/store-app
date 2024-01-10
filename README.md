@@ -11,55 +11,13 @@ This is a simple API application built with FastAPI, a modern Python web framewo
 ## Technologies Used
 - Python 3
 - FastAPI
+- Pydantic
 - SQLAlchemy
 - PostgreSQL
-- Pydantic
-## Database setup
+- Alembic
+
+## Database Structure
 ```
-CREATE TABLE stores (
-    store_id SERIAL PRIMARY KEY,
-    store_name VARCHAR(255) NOT NULL,
-    location VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE products (
-    product_id SERIAL PRIMARY KEY,
-    product_name VARCHAR(255) NOT NULL,
-    is_available BOOLEAN DEFAULT TRUE,
-    store_id INTEGER REFERENCES stores(store_id)
-);
-
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    email VARCHAR(255) UNIQUE,
-    username VARCHAR(255) UNIQUE,
-    first_name VARCHAR(255),
-    last_name VARCHAR(255),
-    hashed_password VARCHAR(255),
-    is_active BOOLEAN DEFAULT TRUE,
-    role VARCHAR(255)
-);
-```
-
-## Tables should look like below
-```
-stores table
-
-| Column         | Data Type |
-|----------------|-----------|
-| store_id       | SERIAL    |
-| store_name     | VARCHAR   |
-| location       | VARCHAR   |
-
-products table
-
-| Column         | Data Type |
-|----------------|-----------|
-| product_id     | SERIAL    |
-| product_name   | VARCHAR   |
-| is_available   | BOOLEAN   |
-| store_id       | INTEGER   |
-
 users table
 
 | Column         | Data Type |
@@ -72,9 +30,29 @@ users table
 | hashed_password| VARCHAR   |
 | is_active      | BOOLEAN   |
 | role           | VARCHAR   |
+
+stores table
+
+| Column         | Data Type |
+|----------------|-----------|
+| store_id       | SERIAL    |
+| store_name     | VARCHAR   |
+| location       | VARCHAR   |
+| address        | VARCHAR   |
+
+products table
+
+| Column         | Data Type |
+|----------------|-----------|
+| product_id     | SERIAL    |
+| product_name   | VARCHAR   |
+| is_available   | BOOLEAN   |
+| store_id       | INTEGER   |
 ```
 
 ## Getting started
+* Clone repository to your local machine:
+  * `git clone https://github.com/ToghrulMirzayev/store-app.git`
 * Create virtual env:
   * `python -m venv venv`
 * Activate virtual env
@@ -84,15 +62,18 @@ users table
     * `source venv/bin/activate`
 * Install dependencies: 
   * `pip install -r requirements.txt`
-* To make this code work in your local machine, create `.env` in root directory and add environment variables there as shown in below example:
+* Setup Postgres server on your machine with no table in the database as they will be created using alembic migration
+* To make this code work on your local machine, create `.env` in root directory and add environment variables there as shown in below example:
   * ```
-    SECRET_KEY=your secret key
+    SECRET_KEY=unique and complex string as a secret key
     DB_USER=database user
     DB_PASS=database password
     DB_HOST=database host
     DB_PORT=database port
     DB_NAME=database name
     ```
+* Run alembic migration to create tables and columns with proper data types
+  * `alembic upgrade head`
 * Launch the server:
   * Basic Launch
     * `uvicorn app:app`
