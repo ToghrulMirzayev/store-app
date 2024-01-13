@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Store App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" type="text/css" href="{{ '/static/stores_style.css' }}" />
+  <link rel="stylesheet" type="text/css" href="{{ '/static/theme_style.css' }}" />
+  <link rel="icon" type="image/x-icon" href="{{ 'static/favicon.ico' }}" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Condensed&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="toggle-container">
+    <span>Day/Night</span>
+    <label class="toggle-switch">
+      <input type="checkbox" id="toggle-theme" />
+      <span class="toggle-slider round"></span>
+    </label>
+  </div>
+  <h1>Stores</h1>
+  <h3>Information about our stores and products</h3>
+  <table id="myTable">
+    <thead>
+      <tr>
+        <th onclick="sortTable(0)">Stores</th>
+        <th onclick="sortTable(1)">Addresses</th>
+        <th onclick="sortTable(2)">Products</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+    {% for store in stores %}
+        <tr>
+          <td>{{ store.store_name }}</td>
+          <td>{{ store.location }}, {{ store.address }}</td>
+          <td>
+            {% for product in store.products %}
+              {{ product.product_name }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+   <div class="button-container">
+      <button
+        onclick="location.href='/'"
+        class="back-button"
+      >
+        Logout
+      </button>
+    </div>
+  <script type="text/javascript" src="static/theme_script.js"></script>
+  <script type="text/javascript" src="static/sorting_script.js"></script>
+  <footer>
+    <div class="footer-container">
+      <div class="footer-content">By Toghrul Mirzayev</div>
+    </div>
+  </footer>
+</body>
+</html>
