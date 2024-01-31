@@ -24,7 +24,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 def render_template(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("auth.html", {"request": request})
 
 
 @app.get("/stores")
